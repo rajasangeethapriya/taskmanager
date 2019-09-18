@@ -1,12 +1,19 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { AppComponent } from './app.component';
+import { AppComponent,DialogContentExampleDialog } from './app.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MatTabsModule} from '@angular/material'
+import {MatTabsModule,
+   MatNativeDateModule,MatButtonModule} from '@angular/material'
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { FlexLayoutModule } from "@angular/flex-layout";
 import {MatInputModule} from '@angular/material/input';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { HttpClientModule } from '@angular/common/http';
+import {MatTabChangeEvent} from '@angular/material';
+import {MatDialogModule} from '@angular/material/dialog'; 
+import { GrdFilterPipe } from './grd-filter.pipe';
+
+//MatNativeDateModule
 
 
 
@@ -15,10 +22,10 @@ import {MatCardModule} from '@angular/material/card';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 @NgModule({
    declarations: [
-      AppComponent
+      AppComponent,DialogContentExampleDialog,GrdFilterPipe,
    ],
    imports: [
-      BrowserModule,
+      BrowserModule,HttpClientModule,
       BrowserAnimationsModule,
       MatTabsModule,
       FormsModule,
@@ -26,7 +33,8 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
       FlexLayoutModule,
       MatSliderModule,
       MatCardModule,
-      MatInputModule,MatDatepickerModule,MatGridListModule
+      MatButtonModule,
+      MatInputModule,MatDatepickerModule,MatGridListModule,MatNativeDateModule,MatDialogModule,
       
    ],
    exports:[
@@ -37,9 +45,15 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
     ReactiveFormsModule,
     FlexLayoutModule,
     MatSliderModule,
-    MatCardModule
+    MatCardModule,MatDialogModule
    ],
+   entryComponents: [AppComponent, DialogContentExampleDialog],
    providers: [],
    bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+
+
+
+
+}

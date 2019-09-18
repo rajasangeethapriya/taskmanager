@@ -1,114 +1,96 @@
-<mat-tab-group dynamicHeight>
+<mat-tab-group (selectedTabChange)="tabChanged($event)" dynamicHeight>
 
 
   <mat-tab label="Add Task">
-    <div layout-align='center center' layout='column'>
-      <div>
-        Task Name
-        &nbsp;
-        &nbsp;
-        <mat-form-field class="example-full-width">
-
-          <input matInput placeholder="" value="">
-
-        </mat-form-field>
-
-
-      </div>
-      <div>
-        Priority
-        &nbsp;
-        &nbsp;
-        <mat-slider></mat-slider>
-
-      </div>
-
-
-      <div>
-        Parent Task
-        &nbsp;
-        &nbsp;
-        <mat-form-field class="example-full-width">
-
-          <input matInput placeholder="" value="">
-
-        </mat-form-field>
-
-
-      </div>
-
-      <div>
-        Start Date
-        &nbsp;
-        &nbsp;
-        <mat-form-field class="example-full-width">
-
-          <input matInput placeholder="" value="">
-
-        </mat-form-field>
-
-
-      </div>
-
-      <div>
-
-        <div>
-          End Date
-          &nbsp;
-          &nbsp;
-          <mat-form-field class="example-full-width">
-
-            <input matInput placeholder="" value="">
-
-          </mat-form-field>
-
-
-        </div>
-
-
-
-
-
-
-
-      </div>
-
-      <div>
-        &nbsp;
-        &nbsp;
-
-        <button mat-button>Add Task</button>
-        &nbsp;
-        &nbsp;
-        &nbsp;
-        &nbsp;
-        <button mat-button>Reset</button>
-      </div>
-
-    </div>
-    <!-- <div class="container"
-      fxLayout
-      fxLayout.xs="column"
-      fxLayoutAlign="center"
-      fxLayoutGap="10px"
+      <br>
+    <div class="container2" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
       fxLayoutGap.xs="0">
 
-      <div class="task_name" fxflex="10%"> 
 
-         Task         : <input matInput name="taskname" placeholder="" value="">
-       
-
+      <div class="container2" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
+        fxLayoutGap.xs="0">
+        <div class="sample" fxFlex="10%">
+          Task:
+        </div>
+        <div class="edit" fxFlex="20%">
+          <input matInput placeholder="Task Name" value="" #taskname [(ngModel)]="taskVar">
+        </div>
       </div>
-      <div class="priority" fxflex="10%"> 
 
-      <mat-card>Simple card</mat-card>
-      <mat-slider></mat-slider>
-        
-        
- 
-       </div>
+      <div class="container2" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
+        fxLayoutGap.xs="0">
+        <div class="sample" fxFlex="10%">
+          Priority:
+        </div>
+        <div class="edit" fxFlex="10%">
+          <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1000" min="1" max="30" #matslider
+            (input)="pitch($event)" [(ngModel)]="value"></mat-slider>
+        </div>
+      </div>
 
-      </div> -->
+      <div class="container2" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
+        fxLayoutGap.xs="0">
+        <div class="sample" fxFlex="10%">
+          Parent:
+        </div>
+        <div class="edit" fxFlex="20%">
+          <input matInput placeholder="Task Name" value="" #parentname [(ngModel)]="parentName">
+        </div>
+      </div>
+
+
+
+      <div class="container2" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
+        fxLayoutGap.xs="0">
+        <div class="sample" fxFlex="10%" fxLayoutAlign="start center">
+          Start Date:
+        </div>
+        <div class="edit" fxFlex="20%">
+          <mat-form-field>
+            <input matInput [matDatepicker]="picker1" placeholder="Choose a date" #startdate [(ngModel)]="startDate">
+            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+            <mat-datepicker #picker1></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+
+
+
+
+
+      <div class="container2" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
+        fxLayoutGap.xs="0">
+        <div class="sample" fxFlex="10%" fxLayoutAlign="start center">
+          End Date:
+        </div>
+        <div class="edit" fxFlex="20%">
+          <mat-form-field>
+            <input matInput [matDatepicker]="picker" placeholder="Choose a date" #enddate [(ngModel)]="endDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+
+
+
+
+      <div class="container2" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
+        fxLayoutGap.xs="0">
+        <div class="sample" fxFlex="10%" fxLayoutAlign="start center">
+          <button mat-raised-button color="primary"
+            (click)="myFunc(taskname.value,parentname.value,startdate.value,enddate.value)">Add Task</button>
+
+        </div>
+        <div class="edit" fxFlex="20%">
+
+          <button mat-raised-button color="warn" type="reset" (click)="reset()">Reset</button>
+        </div>
+      </div>
+    </div>
+
+
+
 
 
 
@@ -116,88 +98,123 @@
 
 
   <mat-tab label="View Task">
+    <br>
 
-      <mat-grid-list cols="4" rowHeight="2:1">
-          <mat-grid-tile>
-              Task :
-          </mat-grid-tile>
+      <div class="container-fluid">
+      <div class="container2" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px"
+      fxLayoutGap.xs="0">
+          <div  class="form-group col-sm-6" >
+            <label>Task:</label>
+            <input type="text"  [(ngModel)]="term" />
+            
+          </div>
+          
+          <div  class="form-group  col-sm-6">
+            <label>Parent Task:</label>
+            <input  class="form-control" type="text" />
+          </div>
+        </div>
+        <br>
+        <div lass="container2" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px"
+        fxLayoutGap.xs="0">
+          <div  class="form-group col-sm-3">
+            <label>Priority From:</label>
+            <input  class="form-control" type="number" (keyup)='searchPriorityFrom($event.target.value)'  />
+          </div>
+        
+          <div  class="form-group col-sm-3">
+            <label>Priority To:</label>
+            <input  class="form-control" type="number" (keyup)='searchPriorityFrom($event.target.value)' />
+          </div>
+          <div  class="form-group col-sm-3">
+            <label>Start Date:</label>
+            <input  class="form-control" type="date" (keyup)='searchStartDate($event.target.value)' />
+          </div>
+          <div  class="form-group col-sm-3">
+            <label>End Date:</label>
+            <input   class="form-control" type="date" (keyup)='searchEndDate($event.target.value)' />
+          </div>
+        </div>
+        </div>
+        <p>.........................................................................................................................
+          ...................................................................................................................................................................................................................................</p>
+        
        
-          <mat-grid-tile>
-              <mat-form-field class="example-full-width">
-                  <input matInput placeholder="" value="">
-                </mat-form-field>
+        
 
-          </mat-grid-tile>
-
-
-          <mat-grid-tile>
-             Parent Task :
-          </mat-grid-tile>
-       
-          <mat-grid-tile>
-              <mat-form-field class="example-full-width">
-                  <input matInput placeholder="" value="">
-                </mat-form-field>
-
-          </mat-grid-tile>
-
-
-        </mat-grid-list>
-        <mat-grid-list cols="8" rowHeight="2:1">
-            <mat-grid-tile>
-                Priority From :
-            </mat-grid-tile>
-         
-            <mat-grid-tile>
-                <mat-form-field class="example-full-width">
-                    <input matInput placeholder="" value="">
-                  </mat-form-field>
   
-            </mat-grid-tile>
-  
-  
-            <mat-grid-tile>
-               Priority To :
-            </mat-grid-tile>
-         
-            <mat-grid-tile>
-                <mat-form-field class="example-full-width">
-                    <input matInput placeholder="" value="">
-                  </mat-form-field>
-  
-            </mat-grid-tile>
 
-
-            <mat-grid-tile>
-                Start Date :
-            </mat-grid-tile>
-         
-            <mat-grid-tile>
-                <mat-form-field class="example-full-width">
-                    <input matInput placeholder="" value="">
-                  </mat-form-field>
+<form #formRef="ngForm">
+  <div *ngFor="let newval of dataa  | grdFilter:{ task: term } : false; let in=index;" class="col-sm-3">
+    <tr>
+      
   
-            </mat-grid-tile>
+    </tr>  
+    <div class="form-group">
+   
+        <!--<p [hidden]="words2[in].value">Field is required</p>
+        {{formRef.form.name1}}-->
+      </div>
+      <div class="container2" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
+      fxLayoutGap.xs="0">
+      <div class="sample" fxFlex="10%">
+        Task
+      </div>
+      <div class="edit" fxFlex="10%">
+        Parent
+      </div>
+      <div class="edit" fxFlex="10%">
+        Priority
+      </div>
+      <div class="edit" fxFlex="10%">
+        Start
+      </div>
+      <div class="edit" fxFlex="10%">
+        End
+      </div>
+      
+    </div>
   
-  
-            <mat-grid-tile>
-               End Date :
-            </mat-grid-tile>
-         
-            <mat-grid-tile>
-                <mat-form-field class="example-full-width">
-                    <input matInput placeholder="" value="">
-                  </mat-form-field>
-  
-            </mat-grid-tile>
+    <div class="container2" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
+    fxLayoutGap.xs="0">
+    <div class="sample" fxFlex="10%">
+      <input type="text" disabled="true" [(ngModel)]="newval.task" name="name2{{in}}" class="form-control" #name="ngModel" required />
+      
+    </div>
+    <div class="edit" fxFlex="10%">
+      <input type="text" disabled="true" [(ngModel)]="newval.parentTask" name="name{{in}}" class="form-control" #name="ngModel" required />
+    </div>
+    <div class="edit" fxFlex="10%">
+     {{newval.priority}}
+    </div>
+    <div class="edit" fxFlex="10%">
+      {{newval.startDate}}
+    </div>
+    <div class="edit" fxFlex="10%">
+      {{newval.endDate}}
+    </div>
+    <div class="edit" fxFlex="20%">
 
+      <button mat-raised-button color="warn"   [disabled]='newval.endFlag === 1'(click)="openDialog(in)">Edit Task</button>
+    </div>
+    <div class="edit" fxFlex="20%">
 
-          </mat-grid-list>
-
-
+      <button mat-raised-button color="warn" type="submit" [disabled]='newval.endFlag === 1' (click)="end(in)">End Task</button>
+      
+    </div>
     
+  </div>
+      <br />
+  </div>
+  
+</form>
+<br />
+
+<br />
 
   </mat-tab>
 
 
 </mat-tab-group>
+
+

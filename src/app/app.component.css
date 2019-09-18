@@ -6,3 +6,10 @@
     background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
     background-size: cover;
   }
+
+  edit {
+    background:rgb(51,48,48);
+    height: 50%;
+    color:rgb(255,255,255);
+    
+  }
