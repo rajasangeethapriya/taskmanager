@@ -1,31 +1,25 @@
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'grdFilter'
+  name: 'sort'
 })
-export class GrdFilterPipe implements PipeTransform {
-
-  transform(items: any, filter: any, isAnd: boolean): any {
-    console.log(items);
-    if (filter && Array.isArray(items)) {
-      let filterKeys = Object.keys(filter);
-      if (isAnd) {
-        return items.filter(item =>
-            filterKeys.reduce((memo, keyName) =>
-                (memo && new RegExp(filter[keyName], 'gi').test(item[keyName])) || filter[keyName] === "", true));
-      } else {
-        return items.filter(item => {
-          return filterKeys.some((keyName) => {
-            console.log(keyName);
-            return new RegExp(filter[keyName], 'gi').test(item[keyName]) || filter[keyName] === "";
-          });
-        });
-      }
-    } else {
-      return items;
+export class Sort implements PipeTransform {
+  transform(array: any, field: string): any[] {
+    if (!Array.isArray(array)) {
+      return;
     }
+    array.sort((a: any, b: any) => {
+      if (a[field] < b[field]) {
+        return -1;
+      } else if (a[field] > b[field]) {
+        return 1;
+      } else {
+        return 0;
+      }
+    });
+    return array;
   }
-  // transform(items: any,task: string, parentTask: string, filter: any, defaultFilter: boolean): any {
+}
   //   console.log(task);
   //   console.log(parentTask);
   //   if (!filter){
@@ -70,4 +64,3 @@ export class GrdFilterPipe implements PipeTransform {
 //         return items;
 //     }
 // }
-}

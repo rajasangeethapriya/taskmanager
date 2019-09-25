@@ -1,8 +1,10 @@
 <mat-tab-group (selectedTabChange)="tabChanged($event)" dynamicHeight>
+  <mat-tab label="Add Project">
 
 
-  <mat-tab label="Add Task">
-      <br>
+ 
+
+    <br>
     <div class="container2" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
       fxLayoutGap.xs="0">
 
@@ -10,12 +12,46 @@
       <div class="container2" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
         fxLayoutGap.xs="0">
         <div class="sample" fxFlex="10%">
-          Task:
+          Project:
         </div>
         <div class="edit" fxFlex="20%">
-          <input matInput placeholder="Task Name" value="" #taskname [(ngModel)]="taskVar">
+          <input matInput placeholder="Project Name" value="" #projectname  [(ngModel)]="projectvariable">
         </div>
+
       </div>
+
+
+
+
+      <div class="container2" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
+        fxLayoutGap.xs="0">
+        <div class="sample" fxFlex="10%">
+
+        </div>
+        <div class="edit">
+          <input type="checkbox" [(ngModel)]="theCheckbox" data-md-icheck (change)="toggleVisibility($event)" />
+          Set Start and End Date
+          <mat-form-field>
+            <input matInput [matDatepicker]="st" min="todayDate" [disabled]="!theCheckbox" placeholder="Choose start date"
+              #startdate_project formControlName="startingDate"[(ngModel)]="date" >
+            <mat-datepicker-toggle matSuffix [for]="st"></mat-datepicker-toggle>
+            <mat-datepicker #st></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput [matDatepicker]="end" [disabled]="!theCheckbox" placeholder="Choose end date"
+              #enddate_project>
+            <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
+            <mat-datepicker #end></mat-datepicker>
+          </mat-form-field>
+
+
+        </div>
+
+
+      </div>
+
+     
+
 
       <div class="container2" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
         fxLayoutGap.xs="0">
@@ -27,6 +63,253 @@
             (input)="pitch($event)" [(ngModel)]="value"></mat-slider>
         </div>
       </div>
+      
+
+      <div class="container2" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
+        fxLayoutGap.xs="0">
+        <div class="sample" fxFlex="10%">
+          Manager:
+        </div>
+
+
+
+      
+
+
+
+
+          
+    <form class="example-form">
+        <mat-form-field class="example-full-width">
+          <input type="text" placeholder="" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="check" #manager >
+          <mat-autocomplete #check="matAutocomplete">
+            <mat-option *ngFor="let option of user_data" [value]="option.firstname">
+              {{option.firstname}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+       
+        <!-- <mat-form-field>
+          <input type="text" matInput  [matAutocomplete]="auto" #manager >
+        </mat-form-field>
+
+        <mat-autocomplete #auto="matAutocomplete">
+          <mat-option *ngFor="let option of options" [value]="option">{{option}}</mat-option>
+        </mat-autocomplete> -->
+
+
+
+        <!-- <form class="example-form">
+            <mat-form-field class="example-full-width">
+              <input type="text" placeholder="Pick one" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="auto">
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let option of options" [value]="option">
+                  {{option}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </form> -->
+          
+          
+        <div class="edit" fxFlex="20%">
+
+          <button mat-raised-button color="warn" type="reset" (click)="searchManager()">Search</button>
+        </div>
+      </div>
+
+     
+      <div class="container2" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
+        fxLayoutGap.xs="0">
+        <div class="sample" fxFlex="10%" fxLayoutAlign="start center">
+
+        </div>
+
+        <div class="edit" fxFlex="20%">
+          <button mat-raised-button color="primary" 
+            (click)="addProject(projectname.value,startdate_project.value,enddate_project.value,matslider.value,manager.value)">{{addbuttonname}}</button>
+
+          <button mat-raised-button color="warn" type="reset" (click)="resetProject()">RESET</button>
+        </div>
+      
+      </div>
+      
+
+    
+   
+
+
+
+
+        <div class="container5"  fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
+        fxLayoutGap.xs="0">
+        <div class="sample" fxFlex="10%">
+        Search
+        </div>
+        <div class="edit" fxFlex="20%">
+          <input matInput placeholder="Project Name" value="" #searhname [(ngModel)]="projectVal">
+        </div>
+
+      </div>
+
+      <p>
+          ............................................................................................................................................................................................................................................................................................................................................................
+        </p>
+      
+      <div class="container5" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
+        fxLayoutGap.xs="0">
+        <div class="sample" fxFlex="10%">
+          Sort By:
+        </div>
+        <div class="edit" fxFlex="50%">
+          <button mat-raised-button color="primary"
+            (click)="sortByStart()">Start Date</button>
+
+          <button mat-raised-button color="warn" type="reset" (click)="sortByEnd()">End Date</button>
+
+          <button mat-raised-button color="warn" type="reset" (click)="sortByPriority()">Priority</button>
+          <button mat-raised-button color="warn" type="reset" (click)="sortByCompleted()">Completed</button>
+        </div>
+
+        <br>
+        <br>
+
+
+
+      </div>
+      <div>
+
+      </div>
+      <p>
+          ............................................................................................................................................................................................................................................................................................................................................................
+        </p>
+      <form #formRef="ngForm" class="container6">
+        <div *ngFor="let projectdata of project_data  | grdFilter:{project:projectVal} ; let in=index;" class="col-ssss">
+
+          <div class="containergrp" fxLayout="row" fxFlex="50%" fxLayout.xs="row" fxLayoutAlign="center" fxLayoutGap="10px"
+            fxLayoutGap.xs="10">
+            <div class="form-group" fxLayout="column" fxFlex="50%" fxLayout.xs="row" fxLayoutAlign="center"
+              fxLayoutGap="10px" fxLayoutGap.xs="0">
+              <div class="item item-1" fxFlex="60%">Project : {{projectdata.project}}</div>
+              <div class="item item-2" fxFlex="20%">No of Tasks : {{projectdata.count}}</div>
+              <div class="item item-2" fxFlex="20%">Start Date : {{projectdata.startDate}}</div>
+            </div>
+            <div class="form-group" fxLayout="column" fxFlex="30%" fxLayout.xs="row" fxLayoutAlign="center"
+              fxLayoutGap="10px" fxLayoutGap.xs="0">
+              <div class="item item-1" fxFlex="60%"></div>
+              <div class="item item-2" fxFlex="20%">Completed : {{projectdata.isCompleted}}</div>
+              <div class="item item-2" fxFlex="20%">End Date : {{projectdata.endDate}}</div>
+            </div>
+
+            <div class="form-group" fxLayout="column" fxFlex="20%" fxLayout.xs="row" fxLayoutAlign="center"
+              fxLayoutGap="10px" fxLayoutGap.xs="0">
+              <div class="item item-1" fxFlex="60%">Priority</div>
+              <div class="item item-2" fxFlex="20%">{{projectdata.priority}} </div>
+              <div class="item item-2" fxFlex="20%"></div>
+            </div>
+            <div class="form-group" fxLayout="column" fxFlex="20%" fxLayout.xs="row" fxLayoutAlign="center"
+              fxLayoutGap="10px" fxLayoutGap.xs="0">
+              <div class="edit" fxFlex="50%">
+                <button mat-raised-button color="warn" type="submit" [disabled]='' (click)="updateProject(in)">
+                  Update </button>
+              </div>
+              <div class="edit" fxFlex="50%">
+                <button mat-raised-button color="warn" type="submit" [disabled]='' (click)="end(in)">
+                  Suspend
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </form>
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+  </mat-tab>
+
+
+
+
+
+
+
+
+
+  <mat-tab label="Add Task">
+    <br>
+    <div class="container2" fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
+      fxLayoutGap.xs="0">
+      <div class="container2" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
+        fxLayoutGap.xs="0">
+        <div class="sample" fxFlex="10%">
+          Project:
+        </div>
+        <div class="edit" fxFlex="20%">
+            <mat-form-field>
+                <input type="text" matInput  [matAutocomplete]="project_auto" #taskprojectname>
+              </mat-form-field>
+      
+              <mat-autocomplete #project_auto="matAutocomplete">
+                <mat-option *ngFor="let project of project_data" [value]="project.project">{{project.project}}</mat-option>
+              </mat-autocomplete>
+        </div>
+        <div class="edit" fxFlex="20%">
+
+          <button mat-raised-button color="warn" type="reset" (click)="searchProject()">Search</button>
+        </div>
+      </div>
+
+      <div class="container2" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
+        fxLayoutGap.xs="0">
+        <div class="sample" fxFlex="10%">
+          Task:
+        </div>
+        <div class="edit" fxFlex="20%">
+          <input matInput placeholder="Task Name" value="" #tasktaskname [(ngModel)]="taskVariable" >
+        </div>
+      </div>
+
+      <div class="container2" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
+        fxLayoutGap.xs="0">
+        <div class="sample" fxFlex="10%">
+
+        </div>
+        <div class="check" fxFlex="20%">
+          <input type="checkbox" [(ngModel)]="theCheckbox" data-md-icheck (change)="ParentTaskCheck($event)" />
+          Parent Task
+        </div>
+
+      </div>
+
+      <div class="container2" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
+        fxLayoutGap.xs="0">
+        <div class="sample" fxFlex="10%">
+          Priority:
+        </div>
+        <div class="edit" fxFlex="10%">
+          <mat-slider thumbLabel [displayWith]="formatLabel" tickInterval="1000" min="1" max="30" #taskmatslider
+            (input)="pitch($event)" [(ngModel)]="value"></mat-slider>
+        </div>
+      </div>
 
       <div class="container2" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
         fxLayoutGap.xs="0">
@@ -34,7 +317,17 @@
           Parent:
         </div>
         <div class="edit" fxFlex="20%">
-          <input matInput placeholder="Task Name" value="" #parentname [(ngModel)]="parentName">
+            <mat-form-field>
+                <input type="text" matInput  [matAutocomplete]="auto" #taskparentname [(ngModel)]="parentVariable" >
+              </mat-form-field>
+      
+              <mat-autocomplete #auto="matAutocomplete">
+                <mat-option *ngFor="let option of task_data" [value]="option.parentTask">{{option.parentTask}}</mat-option>
+              </mat-autocomplete>
+        </div>
+        <div class="edit" fxFlex="20%">
+
+          <button mat-raised-button color="warn" type="reset" (click)="searchTask()">Search</button>
         </div>
       </div>
 
@@ -47,7 +340,7 @@
         </div>
         <div class="edit" fxFlex="20%">
           <mat-form-field>
-            <input matInput [matDatepicker]="picker1" placeholder="Choose a date" #startdate [(ngModel)]="startDate">
+            <input matInput type="text" [matDatepicker]="picker1" placeholder="Choose start date" #taskstartdate [(ngModel)]="startDate"  (dateInput)="addEvent('input', $event)" (dateChange)="addEvent('change', $event)">
             <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
             <mat-datepicker #picker1></mat-datepicker>
           </mat-form-field>
@@ -65,7 +358,7 @@
         </div>
         <div class="edit" fxFlex="20%">
           <mat-form-field>
-            <input matInput [matDatepicker]="picker" placeholder="Choose a date" #enddate [(ngModel)]="endDate">
+            <input matInput [matDatepicker]="picker" placeholder="Choose end date" #taskenddate [(ngModel)]="endDate">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker #picker></mat-datepicker>
           </mat-form-field>
@@ -73,18 +366,41 @@
       </div>
 
 
+      <div class="container2" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
+        fxLayoutGap.xs="0">
+        <div class="sample" fxFlex="10%">
+          User:
+        </div>
+        <div class="edit" fxFlex="20%">
+            <mat-form-field>
+                <input type="text" matInput  [matAutocomplete]="auto_user" #taskuser >
+              </mat-form-field>
+      
+              <mat-autocomplete #auto_user="matAutocomplete">
+                <mat-option *ngFor="let option of user_data" [value]="option.firstname">{{option.firstname}}</mat-option>
+              </mat-autocomplete>
+        </div>
+        <div class="edit" fxFlex="20%">
+
+          <button mat-raised-button color="warn" type="submit" (click)="searchManager()">Search</button>
+        </div>
+      </div>
 
 
       <div class="container2" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
         fxLayoutGap.xs="0">
+
+        <div class="sample" fxFlex="10%" fxLayoutAlign="start center">
+
+        </div>
         <div class="sample" fxFlex="10%" fxLayoutAlign="start center">
           <button mat-raised-button color="primary"
-            (click)="myFunc(taskname.value,parentname.value,startdate.value,enddate.value)">Add Task</button>
+            (click)="AddTask(tasktaskname.value,taskparentname.value,taskmatslider.value,taskstartdate.value,taskenddate.value,taskprojectname.value,taskuser.value)">Add Task</button>
 
         </div>
         <div class="edit" fxFlex="20%">
 
-          <button mat-raised-button color="warn" type="reset" (click)="reset()">Reset</button>
+          <button mat-raised-button color="warn" type="reset" (click)="resetProject2()">Reset</button>
         </div>
       </div>
     </div>
@@ -96,125 +412,281 @@
 
   </mat-tab>
 
+  <mat-tab label="Add User">
+    <div class="containeruser" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
+      fxLayoutGap.xs="0">
+      <div class="sample" fxFlex="10%">
+        First Name:
+      </div>
+      <div class="edit" fxFlex="20%">
+        <input matInput placeholder=" First Name" value="" #userfirstname>
+      </div>
+    </div>
+    <div class="containeruser" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
+      fxLayoutGap.xs="0">
+      <div class="sample" fxFlex="10%">
+        Last Name :
+      </div>
+      <div class="edit" fxFlex="20%">
+        <input matInput placeholder="Last Name" value="" #userlastname>
+      </div>
+    </div>
+    <div class="containeruser" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
+      fxLayoutGap.xs="0">
+      <div class="sample" fxFlex="10%">
+        Employee ID:
+      </div>
+      <div class="edit" fxFlex="20%">
+        <input matInput placeholder="Employee ID" value="" #userempid>
+      </div>
+    </div>
 
+
+
+
+    <div class="containeruser" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
+      fxLayoutGap.xs="0">
+      <div class="sample" fxFlex="10%">
+
+      </div>
+      <div class="edit" fxFlex="10%">
+        <button mat-raised-button color="warn" type="submit" [disabled]=''
+          (click)="addUser(userfirstname.value,userlastname.value,userempid.value)">Add</button>
+      </div>
+      <div class="edit" fxFlex="10%">
+        <button mat-raised-button color="warn" type="submit" [disabled]='' (click)="end(in)">Reset</button>
+      </div>
+    </div>
+    <p>
+        ............................................................................................................................................................................................................................................................................................................................................................
+      </p>
+
+    <div class="containeruser" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
+      fxLayoutGap.xs="0">
+      <div class="sample" fxFlex="10%">
+        <input matInput placeholder="Seacrh" value="" #taskname [(ngModel)]="servar">
+      </div>
+      <div class="sample" fxFlex="10%">
+        Sort :
+      </div>
+      <div class="edit" fxFlex="10%">
+        <button mat-raised-button color="warn" type="submit" [disabled]='' (click)="sortByFirstName()">First Name</button>
+      </div>
+      <div class="edit" fxFlex="10%">
+        <button mat-raised-button color="warn" type="submit" [disabled]='' (click)="sortByLastName()">Last Name</button>
+      </div>
+      <div class="edit" fxFlex="10%">
+        <button mat-raised-button color="warn" type="submit" [disabled]='' (click)="sortByID()">ID</button>
+      </div>
+    </div>
+    
+    <p>
+        ............................................................................................................................................................................................................................................................................................................................................................
+      </p>
+    <form #formRef="ngForm">
+
+
+
+
+      <div *ngFor="let ssss of user_data  | grdFilter:{ firstname: servar } : false; let in=index;" class="col-sm-3">
+        <tr>
+
+
+        </tr>
+        <div class="form-group">
+
+          <!--<p [hidden]="words2[in].value">Field is required</p>
+            {{formRef.form.name1}}-->
+        </div>
+
+        <div class="container2" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
+          fxLayoutGap.xs="0">
+          <div class="sample" fxFlex="10%">
+            <input type="text" disabled="true" [(ngModel)]="ssss.firstname" name="name12{{in}}" class="form-control"
+              #name="ngModel" required />
+
+          </div>
+
+          <div fxFlex="10%"></div>
+          <div class="edit" fxFlex="20%">
+
+            <button mat-raised-button color="warn" [disabled]='' (click)="openDialog(in)">Edit
+            </button>
+          </div>
+
+
+        </div>
+
+        <div class="button" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
+          fxLayoutGap.xs="0">
+          <div class="sample" fxFlex="10%">
+            <input type="text" disabled="true" [(ngModel)]="ssss.lastname" name="name13{{in}}" class="form-control"
+              #name="ngModel" required />
+
+          </div>
+
+          <div fxFlex="10%"></div>
+          <div class="edit" fxFlex="20%">
+
+            <button mat-raised-button color="warn" [disabled]='' (click)="openDialog(in)">
+              Delete</button>
+          </div>
+
+
+        </div>
+        <div class="container2" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
+          fxLayoutGap.xs="0">
+
+          <div class="edit" fxFlex="10%">
+            <input type="text" disabled="true" [(ngModel)]="ssss.employeeid" name="name14{{in}}" class="form-control"
+              #name="ngModel" required />
+          </div>
+
+          <div class="edit" fxFlex="20%">
+
+
+          </div>
+
+
+        </div>
+        <br />
+      </div>
+
+    </form>
+  </mat-tab>
   <mat-tab label="View Task">
     <br>
 
-      <div class="container-fluid">
+    <div class="container-fluid">
       <div class="container2" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px"
-      fxLayoutGap.xs="0">
-          <div  class="form-group col-sm-6" >
-            <label>Task:</label>
-            <input type="text"  [(ngModel)]="term" />
-            
-          </div>
-          
-          <div  class="form-group  col-sm-6">
-            <label>Parent Task:</label>
-            <input  class="form-control" type="text" />
-          </div>
-        </div>
-        <br>
-        <div lass="container2" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="10px"
         fxLayoutGap.xs="0">
-          <div  class="form-group col-sm-3">
-            <label>Priority From:</label>
-            <input  class="form-control" type="number" (keyup)='searchPriorityFrom($event.target.value)'  />
-          </div>
-        
-          <div  class="form-group col-sm-3">
-            <label>Priority To:</label>
-            <input  class="form-control" type="number" (keyup)='searchPriorityFrom($event.target.value)' />
-          </div>
-          <div  class="form-group col-sm-3">
-            <label>Start Date:</label>
-            <input  class="form-control" type="date" (keyup)='searchStartDate($event.target.value)' />
-          </div>
-          <div  class="form-group col-sm-3">
-            <label>End Date:</label>
-            <input   class="form-control" type="date" (keyup)='searchEndDate($event.target.value)' />
-          </div>
-        </div>
-        </div>
-        <p>.........................................................................................................................
-          ...................................................................................................................................................................................................................................</p>
-        
-       
-        
 
-  
 
-<form #formRef="ngForm">
-  <div *ngFor="let newval of dataa  | grdFilter:{ task: term } : false; let in=index;" class="col-sm-3">
-    <tr>
-      
-  
-    </tr>  
-    <div class="form-group">
-   
-        <!--<p [hidden]="words2[in].value">Field is required</p>
+        <div class="container2" fxFlex="100%" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start"
+          fxLayoutGap="2px" fxLayoutGap.xs="0">
+          <div class="sample" fxFlex="10%">
+            User:
+          </div>
+          <form class="example-form">
+              <mat-form-field class="example-full-width">
+                <input type="text" placeholder="" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="viewtask" #viewtaskmul >
+                <mat-autocomplete #viewtask="matAutocomplete"  (optionSelected)='getPosts($event.option.value)'>
+                  <mat-option *ngFor="let option of user_data_for_view_task" [value]="option.firstname">
+                    {{option.firstname}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+            </form>
+          <div class="edit" fxFlex="20%">
+
+            <button mat-raised-button color="warn" type="reset" (click)="SearchUser()">Search</button>
+          </div>
+          <div class="sample" fxFlex="10%">
+            Sort By:
+          </div>
+          <div class="sample" fxLayout="row" fxFlex="50%">
+            <button mat-raised-button color="primary"
+              (click)="sortByStartTask()">Start Date</button>
+
+            <button mat-raised-button color="warn" type="reset" (click)="sortByEndTask()">End Date</button>
+
+            <button mat-raised-button color="warn" type="reset" (click)="sortByPriorityTask()">Priority</button>
+            <button mat-raised-button color="warn" type="reset" (click)="sortByCompletedTask()">Completed</button>
+          </div>
+
+
+        </div>
+
+      </div>
+
+      <br>
+
+    </div>
+    <p>
+      .........................................................................................................................
+      ...................................................................................................................................................................................................................................
+    </p>
+
+
+
+
+
+
+    <form #formRef="ngForm">
+      <div *ngFor="let newval of task_data_task_view  | grdFilter:{ task: term } : false; let in=index;" class="col-sm-3">
+        <tr>
+
+
+        </tr>
+        <div class="form-group">
+
+          <!--<p [hidden]="words2[in].value">Field is required</p>
         {{formRef.form.name1}}-->
-      </div>
-      <div class="container2" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
-      fxLayoutGap.xs="0">
-      <div class="sample" fxFlex="10%">
-        Task
-      </div>
-      <div class="edit" fxFlex="10%">
-        Parent
-      </div>
-      <div class="edit" fxFlex="10%">
-        Priority
-      </div>
-      <div class="edit" fxFlex="10%">
-        Start
-      </div>
-      <div class="edit" fxFlex="10%">
-        End
-      </div>
-      
-    </div>
-  
-    <div class="container2" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
-    fxLayoutGap.xs="0">
-    <div class="sample" fxFlex="10%">
-      <input type="text" disabled="true" [(ngModel)]="newval.task" name="name2{{in}}" class="form-control" #name="ngModel" required />
-      
-    </div>
-    <div class="edit" fxFlex="10%">
-      <input type="text" disabled="true" [(ngModel)]="newval.parentTask" name="name{{in}}" class="form-control" #name="ngModel" required />
-    </div>
-    <div class="edit" fxFlex="10%">
-     {{newval.priority}}
-    </div>
-    <div class="edit" fxFlex="10%">
-      {{newval.startDate}}
-    </div>
-    <div class="edit" fxFlex="10%">
-      {{newval.endDate}}
-    </div>
-    <div class="edit" fxFlex="20%">
+        </div>
+        <div class="container2" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
+          fxLayoutGap.xs="0">
+          <div class="sample" fxFlex="10%">
+            Task
+          </div>
+          <div class="edit" fxFlex="10%">
+            Parent
+          </div>
+          <div class="edit" fxFlex="10%">
+            Priority
+          </div>
+          <div class="edit" fxFlex="10%">
+            Start
+          </div>
+          <div class="edit" fxFlex="10%">
+            End
+          </div>
 
-      <button mat-raised-button color="warn"   [disabled]='newval.endFlag === 1'(click)="openDialog(in)">Edit Task</button>
-    </div>
-    <div class="edit" fxFlex="20%">
+        </div>
 
-      <button mat-raised-button color="warn" type="submit" [disabled]='newval.endFlag === 1' (click)="end(in)">End Task</button>
-      
-    </div>
-    
-  </div>
-      <br />
-  </div>
-  
-</form>
-<br />
+        <div class="container2" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
+          fxLayoutGap.xs="0">
+          <div class="sample" fxFlex="10%">
+            <input type="text" disabled="true" [(ngModel)]="newval.task" name="name2{{in}}" class="form-control"
+              #name="ngModel" required />
 
-<br />
+          </div>
+          <div class="edit" fxFlex="10%">
+            <input type="text" disabled="true" [(ngModel)]="newval.parentTask" name="name{{in}}" class="form-control"
+              #name="ngModel" required />
+          </div>
+          <div class="edit" fxFlex="10%">
+            {{newval.priority}}
+          </div>
+          <div class="edit" fxFlex="10%">
+            {{newval.startDate}}
+          </div>
+          <div class="edit" fxFlex="10%">
+            {{newval.endDate}}
+          </div>
+          <div class="edit" fxFlex="20%">
+
+            <button mat-raised-button color="warn" [disabled]='newval.endFlag === 1' (click)="openDialog2(in)">Edit
+              Task</button>
+          </div>
+          <div class="edit" fxFlex="20%">
+
+            <button mat-raised-button color="warn" type="submit" [disabled]='newval.endFlag === 1' (click)="endTask(in)">End
+              Task</button>
+
+          </div>
+
+        </div>
+        <br />
+      </div>
+
+    </form>
+    <br />
+
+    <br />
 
   </mat-tab>
 
+<mat-tab>
 
+</mat-tab>
 </mat-tab-group>
-
-
