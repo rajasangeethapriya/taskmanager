@@ -62,7 +62,7 @@ export class AppComponent {
   startingDate:any;
   flag2 = [];
   term: string;
-  
+  managerVariable:any;
   addbuttonname: any;
   term1: string;
   term_parent: string;
@@ -71,8 +71,9 @@ export class AppComponent {
   startDateVariable: string;
   //today's date
   date:any;
+  date1:any;
   todaydate: any;
-
+  isValidDate:any;
   projectVal: any;
   //any date
   someDate: Date = new Date();
@@ -101,8 +102,10 @@ export class AppComponent {
   public project_data: ProjectData[];
   public user_data_for_view_task: UserData[];
   public task_data_task_view: TaskData[];
-
-
+  error:any={isError:false,errorMessage:''};
+  userfirstnameval :any;
+  userlastnameval:any;
+   userempidval:any;
 
   taskVariable: any;
   parentVariable: any;
@@ -117,11 +120,16 @@ export class AppComponent {
 
 
 
-
-
+  addTaskUser:any;
+ 
+  value:any;
+ 
+  ProjecttaskVariable:any;
+  
 
   projectnametemp: any;
-  value:any;
+  
+ 
   tabChanged(tabChangeEvent: MatTabChangeEvent): void {
 
     console.log('tabChangeEvent => ', tabChangeEvent);
@@ -232,17 +240,65 @@ export class AppComponent {
 
     }
   }
+  
+  resetProject2()
+  {
+    this.addTaskUser="";
+    this.endDate="";
+    this. startDate="";
+    this.parentVariable="";
+    this.value=0;
+    this.theCheckbox=false;
+    this.taskVariable="";
+    this. ProjecttaskVariable="";
 
-  getPosts(event: any) {
+  }
+  ResetAll()
+  {
+    this.userfirstnameval="";
+    this.userlastnameval="";
+    this.userempidval=""; 
+  }
+
+  toggleVisibility(event)
+  {
+
+console.log(event.target.checked);
+
+const today =  new Date();
+const tomorrow =  new Date(today.setDate(today.getDate() + 1));
+
+this.date=new Date();
+this.date1  =tomorrow;
+
+  }
+
+
+  validateDates(sDate: string, eDate: string){
+    this.isValidDate = true;
+    if((sDate == null || eDate ==null)){
+      this.error={isError:true,errorMessage:'Start date and end date are required.'};
+      this.isValidDate = false;
+    }
+
+    if((sDate != null && eDate !=null) && (eDate) < (sDate)){
+      this.error={isError:true,errorMessage:'End date should be grater then start date.'};
+      this.isValidDate = false;
+    }
+    return this.isValidDate;
+  }
+  getPosts(event: any) 
+  {
 
     console.log(event);
 
     let fd = new FormData();
 
-    fd.append("user", event);
+    fd.append("project", event);
 
 
-    this.http.post("http://localhost:2222/TaskManager/getUserTasks", fd).subscribe((r) => {
+    this.http.post("http://localhost:2222/TaskManager/getProjectTask", fd).subscribe((r) => 
+    {
       this.task_data_task_view = r as TaskData[];
       console.log(JSON.stringify(r));
 
@@ -302,8 +358,17 @@ export class AppComponent {
 
 
   updateProject(id: any) {
-    this.projectvariable = this.project_data[id].project;
+    //this.projectvariable = this.project_data[id].project;
   this.value=this.project_data[id].priority;
+
+  this.projectvariable=this.project_data[id].project;
+  this.value=this.project_data[id].priority;
+  //this.managerVariable=this.project_data[id].;
+  this.date=new Date(this.project_data[id].startDate);
+  this.date1=new Date(this.project_data[id].endDate);
+  //this.date=new Date("9/4/2019");
+
+
     console.log(this.projectnametemp);
     console.log(this.startDateVariable);
     this.addbuttonname = "UPDATE";
@@ -557,38 +622,97 @@ export class AppComponent {
 
 
 
-
-      
-      console.log("ADD");
-
-      let fd = new FormData();
-
-      fd.append("project", project_name);
-      fd.append("startdate", startdate);
-      fd.append("enddate", enddate);
-      fd.append("priority", priorioty);
-      fd.append("manager", manager);
-      this.http.post("http://localhost:2222/TaskManager/addProject", fd).subscribe((r) => {
-
-        console.log(JSON.stringify(r));
-        let response = r;
-        if (response["project"].length > 0) {
-          alert("Project added successfully :) ");
+if(this.theCheckbox)
+{
+  this.isValidDate= this.validateDates(startdate,enddate)
+console.log("checked");
 
 
+var start_date_val  = new Date(startdate);
+
+var end_date_val  = new Date(enddate);
+  if(start_date_val<end_date_val)
+  {
+    console.log("valid");
+   console.log(this.theCheckbox);
+   console.log("this.theCheckbox");
+    console.log("ADD");
+
+    let fd = new FormData();
+
+    fd.append("project", project_name);
+    fd.append("startdate", startdate);
+    fd.append("enddate", enddate);
+    fd.append("priority", priorioty);
+    fd.append("manager", manager);
+    this.http.post("http://localhost:2222/TaskManager/addProject", fd).subscribe((r) =>
+     {
+
+      console.log(JSON.stringify(r));
+      let response = r;
+      if (response["project"].length > 0) {
+        alert("Project added successfully :) ");
 
 
 
-          this.fireGetProject();
 
-        }
-        // this.http.post("https://httpbin.org/post", fd).subscribe((r) => {
-        //console.error("Response " + r);
 
-      }, (error) => {
-        //console.error("Response " + error.json());
-        alert("Error in inserting Project!!!! ");
-      });
+        this.fireGetProject();
+
+      }
+      // this.http.post("https://httpbin.org/post", fd).subscribe((r) => {
+      //console.error("Response " + r);
+
+    }, (error) => {
+      //console.error("Response " + error.json());
+      alert("Error in inserting Project!!!! ");
+    });
+
+  }
+  else
+  {
+    alert("'End date should be grater then start date");
+    console.log("invalid");
+ 
+  }
+
+}
+  else
+  {
+
+   console.log("ADD");
+
+    let fd = new FormData();
+
+    fd.append("project", project_name);
+    fd.append("startdate", startdate);
+    fd.append("enddate", enddate);
+    fd.append("priority", priorioty);
+    fd.append("manager", manager);
+    this.http.post("http://localhost:2222/TaskManager/addProject", fd).subscribe((r) =>
+     {
+
+      console.log(JSON.stringify(r));
+      let response = r;
+      if (response["project"].length > 0) {
+        alert("Project added successfully :) ");
+
+
+
+
+
+        this.fireGetProject();
+
+      }
+      // this.http.post("https://httpbin.org/post", fd).subscribe((r) => {
+      //console.error("Response " + r);
+
+    }, (error) => {
+      //console.error("Response " + error.json());
+      alert("Error in inserting Project!!!! ");
+    });
+  }    
+     
 
     }
     else if (this.addbuttonname === "UPDATE") {
@@ -637,6 +761,10 @@ export class AppComponent {
 
     this.projectvariable="";
     this.value="";
+    this.managerVariable="";
+    this.date="";
+    this.date1="";
+    
   }
 
 
@@ -758,7 +886,21 @@ export class AppComponent {
       alert("Error in inserting Task!!!! ");
     });
   }
-  AddTask(taskname: string, parentname: string, priority: any, startdate: string, enddate: string, project: string, user: string) {
+  AddTask(taskname: string, parentname: string, priority: any, startdate: string, enddate: string, project: string, user: string)
+   {
+   
+   
+   
+   const first_date_value = new Date(startdate);
+   const last_date_value = new Date(enddate);
+   if(first_date_value>last_date_value)
+   {
+
+    alert("'End date should be grater then start date");
+   }
+   else
+   {
+
     console.log(taskname);
     console.log(priority);
     console.log(parentname);
@@ -792,6 +934,11 @@ export class AppComponent {
       //console.error("Response " + error.json());
       alert("Error in inserting Task!!!! ");
     });
+   }
+   
+   
+   
+   
   }
   onClick(event: MatTabChangeEvent) {
 

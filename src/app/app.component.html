@@ -33,13 +33,13 @@
           Set Start and End Date
           <mat-form-field>
             <input matInput [matDatepicker]="st" min="todayDate" [disabled]="!theCheckbox" placeholder="Choose start date"
-              #startdate_project formControlName="startingDate"[(ngModel)]="date" >
+              #startdate_project [(ngModel)]="date" >
             <mat-datepicker-toggle matSuffix [for]="st"></mat-datepicker-toggle>
             <mat-datepicker #st></mat-datepicker>
           </mat-form-field>
           <mat-form-field>
             <input matInput [matDatepicker]="end" [disabled]="!theCheckbox" placeholder="Choose end date"
-              #enddate_project>
+              #enddate_project  [(ngModel)]="date1" >
             <mat-datepicker-toggle matSuffix [for]="end"></mat-datepicker-toggle>
             <mat-datepicker #end></mat-datepicker>
           </mat-form-field>
@@ -81,7 +81,7 @@
           
     <form class="example-form">
         <mat-form-field class="example-full-width">
-          <input type="text" placeholder="" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="check" #manager >
+          <input type="text" placeholder="" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="check" #manager  [(ngModel)]="managerVariable" >
           <mat-autocomplete #check="matAutocomplete">
             <mat-option *ngFor="let option of user_data" [value]="option.firstname">
               {{option.firstname}}
@@ -265,7 +265,7 @@
         </div>
         <div class="edit" fxFlex="20%">
             <mat-form-field>
-                <input type="text" matInput  [matAutocomplete]="project_auto" #taskprojectname>
+                <input type="text" matInput  [matAutocomplete]="project_auto" #taskprojectname [(ngModel)]="ProjecttaskVariable">
               </mat-form-field>
       
               <mat-autocomplete #project_auto="matAutocomplete">
@@ -294,7 +294,7 @@
 
         </div>
         <div class="check" fxFlex="20%">
-          <input type="checkbox" [(ngModel)]="theCheckbox" data-md-icheck (change)="ParentTaskCheck($event)" />
+          <input type="checkbox" [(ngModel)]="theCheckbox" data-md-icheck (change)="ParentTaskCheck($event)"  />
           Parent Task
         </div>
 
@@ -373,7 +373,7 @@
         </div>
         <div class="edit" fxFlex="20%">
             <mat-form-field>
-                <input type="text" matInput  [matAutocomplete]="auto_user" #taskuser >
+                <input type="text" matInput  [matAutocomplete]="auto_user" #taskuser  [(ngModel)]="addTaskUser" >
               </mat-form-field>
       
               <mat-autocomplete #auto_user="matAutocomplete">
@@ -419,7 +419,7 @@
         First Name:
       </div>
       <div class="edit" fxFlex="20%">
-        <input matInput placeholder=" First Name" value="" #userfirstname>
+        <input matInput placeholder=" First Name" value="" #userfirstname [(ngModel)]="userfirstnameval">
       </div>
     </div>
     <div class="containeruser" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
@@ -428,7 +428,7 @@
         Last Name :
       </div>
       <div class="edit" fxFlex="20%">
-        <input matInput placeholder="Last Name" value="" #userlastname>
+        <input matInput placeholder="Last Name" value="" #userlastname [(ngModel)]="userlastnameval">
       </div>
     </div>
     <div class="containeruser" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start" fxLayoutGap="2px"
@@ -437,7 +437,7 @@
         Employee ID:
       </div>
       <div class="edit" fxFlex="20%">
-        <input matInput placeholder="Employee ID" value="" #userempid>
+        <input matInput placeholder="Employee ID" value="" #userempid [(ngModel)]="userempidval">
       </div>
     </div>
 
@@ -454,7 +454,7 @@
           (click)="addUser(userfirstname.value,userlastname.value,userempid.value)">Add</button>
       </div>
       <div class="edit" fxFlex="10%">
-        <button mat-raised-button color="warn" type="submit" [disabled]='' (click)="end(in)">Reset</button>
+        <button mat-raised-button color="warn" type="submit" [disabled]='' (click)="ResetAll()">Reset</button>
       </div>
     </div>
     <p>
@@ -565,21 +565,21 @@
         <div class="container2" fxFlex="100%" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="start"
           fxLayoutGap="2px" fxLayoutGap.xs="0">
           <div class="sample" fxFlex="10%">
-            User:
+            Project:
           </div>
           <form class="example-form">
               <mat-form-field class="example-full-width">
                 <input type="text" placeholder="" aria-label="Number" matInput [formControl]="myControl" [matAutocomplete]="viewtask" #viewtaskmul >
                 <mat-autocomplete #viewtask="matAutocomplete"  (optionSelected)='getPosts($event.option.value)'>
-                  <mat-option *ngFor="let option of user_data_for_view_task" [value]="option.firstname">
-                    {{option.firstname}}
+                  <mat-option *ngFor="let option of project_data" [value]="option.project">
+                    {{option.project}}
                   </mat-option>
                 </mat-autocomplete>
               </mat-form-field>
             </form>
           <div class="edit" fxFlex="20%">
 
-            <button mat-raised-button color="warn" type="reset" (click)="SearchUser()">Search</button>
+            <button mat-raised-button color="warn" type="reset" (click)="SearchProject()">Search</button>
           </div>
           <div class="sample" fxFlex="10%">
             Sort By:
